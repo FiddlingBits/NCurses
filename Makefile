@@ -11,10 +11,10 @@ build/:
 	@mkdir build/
 build/demonstration.o: demonstration.c demonstration.h
 	@echo Compile: demonstration.c
-	@clang -std=c17 -Weverything  -I. -c demonstration.c -o $@
+	@clang -std=c17 -Weverything -D_XOPEN_SOURCE_EXTENDED -I. -c demonstration.c -o $@
 build/main.o: main.c demonstration.h
 	@echo Compile: main.c
-	@clang -std=c17 -Weverything  -I. -c main.c -o $@
+	@clang -std=c17 -Weverything -D_XOPEN_SOURCE_EXTENDED -I. -c main.c -o $@
 clean:
 	@echo Clean
 	@rm -fr build

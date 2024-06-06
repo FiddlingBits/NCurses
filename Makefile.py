@@ -17,6 +17,7 @@ COMPILER_FLAGS = [
     "-Weverything"
 ]
 DEFINES = [
+  "-D_XOPEN_SOURCE_EXTENDED"
 ]
 INCLUDE_PATHS = [
   "-I."
