@@ -34,6 +34,8 @@ static void demonstration_7(const char * const Description);
 static void demonstration_8(const char * const Description);
 static void demonstration_9(const char * const Description);
 static void demonstration_10(const char * const Description);
+static void demonstration_11(const char * const Description);
+static void demonstration_12(const char * const Description);
 
 /****************************************************************************************************
  * Constant
@@ -51,7 +53,9 @@ static const demonstration_list_t demonstration_List[] =
     {"Formatting Text: Character Attribute Set", demonstration_7},
     {"Formatting Text: Character Color", demonstration_8},
     {"Formatting Text: Background", demonstration_9},
-    {"Formatting Text: Miscellaneous", demonstration_10}
+    {"Formatting Text: Miscellaneous", demonstration_10},
+    {"Cursor: Screen Size", demonstration_11},
+    {"Cursor: Location", demonstration_12}
 };
 static const size_t demonstration_ListCount = sizeof(demonstration_List) / sizeof(demonstration_List[0]);
 
@@ -96,12 +100,11 @@ static void demonstration_0(const char * const Description)
     
     /*** Run ***/
     /* Print String */
-    (void)move(row++, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(row++, 0, Description);
     (void)refresh();
     
     /* Print Characters */
-    (void)move(row++, 0);
+    move(row++, 0);
     for(i = 0; i < strlen(Description); i++)
     {
         (void)addch(Description[i]);
@@ -110,8 +113,7 @@ static void demonstration_0(const char * const Description)
     }
     
     /* Exit */
-    (void)move(row++, 0);
-    (void)addstr("Press Any Key To Continue...");
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
     
@@ -129,21 +131,18 @@ static void demonstration_1(const char * const Description)
     
     /*** Run ***/
     /* Print String */
-    (void)move(row++, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(row++, 0, Description);
     (void)refresh();
     for(i = 0; i < 21; i++)
     {
-        (void)move(row, 0);
-        (void)printw("Count: %zu", i);
+        (void)mvprintw(row, 0, "Count: %zu", i);
         (void)refresh();
         (void)napms(50);
     }
     row++;
     
     /* Exit */
-    (void)move(row++, 0);
-    (void)addstr("Press Any Key To Continue...");
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
     
@@ -161,31 +160,25 @@ static void demonstration_2(const char * const Description)
     
     /*** Run ***/
     /* Print String */
-    (void)move(row++, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(row++, 0, Description);
     (void)refresh();
     
     /* Get String */
-    (void)move(row++, 0);
-    (void)addstr("Enter String: ");
+    (void)mvaddstr(row++, 0, "Enter String: ");
     (void)refresh();
     (void)getnstr(string, sizeof(string));
-    (void)move(row++, 0);
-    (void)printw("You Entered: %s", string);
+    (void)mvprintw(row++, 0, "You Entered: %s", string);
     (void)refresh();
     
     /* Get Character */
-    (void)move(row++, 0);
-    (void)addstr("Enter Character: ");
+    (void)mvaddstr(row++, 0, "Enter Character: ");
     (void)refresh();
     c = getch();
-    (void)move(row++, 0);
-    (void)printw("You Entered: %c", c);
+    (void)mvprintw(row++, 0, "You Entered: %c", c);
     (void)refresh();
     
     /* Exit */
-    (void)move(row++, 0);
-    (void)addstr("Press Any Key To Continue...");
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
     
@@ -204,8 +197,7 @@ static void demonstration_3(const char * const Description)
     
     /*** Run ***/
     /* Print String */
-    (void)move(row++, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(row++, 0, Description);
     (void)refresh();
     
     /* Print Characters */
@@ -214,14 +206,13 @@ static void demonstration_3(const char * const Description)
     {
         (void)printw("%02X = ", i);
         (void)addch(A_ALTCHARSET | i);
-        addstr("\t");
+        (void)addstr("\t");
         if((((i + 1) % 16) == 0) && ((i + 1) != 0x80))
             (void)move(row++, 0);
     }
     
     /* Exit */
-    (void)move(row++, 0);
-    (void)addstr("Press Any Key To Continue...");
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
     
@@ -239,8 +230,7 @@ static void demonstration_4(const char * const Description)
     
     /*** Run ***/
     /* Print String */
-    (void)move(row++, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(row++, 0, Description);
     (void)refresh();
     
     /* Print Characters */
@@ -258,8 +248,7 @@ static void demonstration_4(const char * const Description)
     (void)addch(ACS_LRCORNER);
     
     /* Exit */
-    (void)move(row++, 0);
-    (void)addstr("Press Any Key To Continue...");
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
     
@@ -285,21 +274,17 @@ static void demonstration_5(const char * const Description)
     
     /*** Run ***/
     /* Print String */
-    (void)move(row++, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(row++, 0, Description);
     (void)refresh();
     
     /* Print Unicode String */
-    (void)move(row++, 0);
-    (void)addwstr(L"👍👎");
+    (void)mvaddwstr(row++, 0, L"👍👎");
     (void)refresh();
-    (void)move(row++, 0);
-    (void)addwstr(GreekLetters);
+    (void)mvaddwstr(row++, 0, GreekLetters);
     (void)refresh();
     
     /* Exit */
-    (void)move(row++, 0);
-    (void)addstr("Press Any Key To Continue...");
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
     
@@ -317,69 +302,59 @@ static void demonstration_6(const char * const Description)
     
     /*** Run ***/
     /* Print String */
-    (void)move(row++, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(row++, 0, Description);
     (void)refresh();
     
     /* Normal */
-    (void)move(row++, 0);
     (void)attron(A_NORMAL);
-    (void)addstr("A_NORMAL");
+    (void)mvaddstr(row++, 0, "A_NORMAL");
     (void)attroff(A_NORMAL);
     (void)refresh();
     
     /* Standout */
-    (void)move(row++, 0);
     (void)attron(A_STANDOUT);
-    (void)addstr("A_STANDOUT");
+    (void)mvaddstr(row++, 0, "A_STANDOUT");
     (void)attroff(A_STANDOUT);
     (void)refresh();
     
     /* Underline */
-    (void)move(row++, 0);
     (void)attron(A_UNDERLINE);
-    (void)addstr("A_UNDERLINE");
+    (void)mvaddstr(row++, 0, "A_UNDERLINE");
     (void)attroff(A_UNDERLINE);
     (void)refresh();
     
     /* Reverse */
-    (void)move(row++, 0);
     (void)attron(A_REVERSE);
-    (void)addstr("A_REVERSE");
+    (void)mvaddstr(row++, 0, "A_REVERSE");
     (void)attroff(A_REVERSE);
     (void)refresh();
     
     /* Blink */
-    (void)move(row++, 0);
     (void)attron(A_BLINK);
-    (void)addstr("A_BLINK");
+    (void)mvaddstr(row++, 0, "A_BLINK");
     (void)attroff(A_BLINK);
     (void)refresh();
     
     /* Dim */
-    (void)move(row++, 0);
     (void)attron(A_DIM);
-    (void)addstr("A_DIM");
+    (void)mvaddstr(row++, 0, "A_DIM");
     (void)attroff(A_DIM);
     (void)refresh();
     
     /* Bold */
-    (void)move(row++, 0);
     (void)attron(A_BOLD);
-    (void)addstr("A_BOLD");
+    (void)mvaddstr(row++, 0, "A_BOLD");
     (void)attroff(A_BOLD);
     (void)refresh();
     
     /* Reverse And Dim */
-    (void)move(row++, 0);
     (void)attron(A_REVERSE | A_DIM); // (void)attron(A_REVERSE); (void)attron(A_DIM); Works The Same
-    (void)addstr("A_REVERSE | A_DIM");
+    (void)mvaddstr(row++, 0, "A_REVERSE | A_DIM");
     (void)attroff(A_REVERSE | A_DIM);
     (void)refresh();
     
     /* Exit */
-    (void)move(row++, 0);
-    (void)addstr("Press Any Key To Continue...");
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
     
@@ -396,62 +371,52 @@ static void demonstration_7(const char * const Description)
     
     /*** Run ***/
     /* Print String */
-    (void)move(row++, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(row++, 0, Description);
     (void)refresh();
     
     /* Normal */
-    (void)move(row++, 0);
     (void)attrset(A_NORMAL);
-    (void)addstr("A_NORMAL");
+    (void)mvaddstr(row++, 0, "A_NORMAL");
     (void)refresh();
     
     /* Standout */
-    (void)move(row++, 0);
     (void)attrset(A_STANDOUT);
-    (void)addstr("A_STANDOUT");
+    (void)mvaddstr(row++, 0, "A_STANDOUT");
     (void)refresh();
     
     /* Underline */
-    (void)move(row++, 0);
     (void)attrset(A_UNDERLINE);
-    (void)addstr("A_UNDERLINE");
+    (void)mvaddstr(row++, 0, "A_UNDERLINE");
     (void)refresh();
     
     /* Reverse */
-    (void)move(row++, 0);
     (void)attrset(A_REVERSE);
-    (void)addstr("A_REVERSE");
+    (void)mvaddstr(row++, 0, "A_REVERSE");
     (void)refresh();
     
     /* Blink */
-    (void)move(row++, 0);
     (void)attrset(A_BLINK);
-    (void)addstr("A_BLINK");
+    (void)mvaddstr(row++, 0, "A_BLINK");
     (void)refresh();
     
     /* Dim */
-    (void)move(row++, 0);
     (void)attrset(A_DIM);
-    (void)addstr("A_DIM");
+    (void)mvaddstr(row++, 0, "A_DIM");
     (void)refresh();
     
     /* Bold */
-    (void)move(row++, 0);
     (void)attrset(A_BOLD);
-    (void)addstr("A_BOLD");
+    (void)mvaddstr(row++, 0, "A_BOLD");
     (void)refresh();
     
     /* Reverse | Dim */
-    (void)move(row++, 0);
     (void)attrset(A_REVERSE | A_DIM);
-    (void)addstr("A_REVERSE | A_DIM");
+    (void)mvaddstr(row++, 0, "A_REVERSE | A_DIM");
     (void)refresh();
     
     /* Exit */
-    (void)move(row++, 0);
     (void)attrset(A_NORMAL);
-    (void)addstr("Press Any Key To Continue...");
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
     
@@ -482,26 +447,21 @@ static void demonstration_8(const char * const Description)
     
     /*** Run ***/
     /* Print String */
-    (void)move(row++, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(row++, 0, Description);
     (void)refresh();
     
     /* Colors */
-    (void)move(row++, 0);
     (void)attrset(COLOR_PAIR(0));
-    (void)addstr("White On Black");
-    (void)move(row++, 0);
+    (void)mvaddstr(row++, 0, "White On Black");
     (void)attrset(COLOR_PAIR(1));
-    (void)addstr("Blue On Black");
-    (void)move(row++, 0);
+    (void)mvaddstr(row++, 0, "Blue On Black");
     (void)attrset(COLOR_PAIR(2));
-    (void)addstr("Cyan On Red");
+    (void)mvaddstr(row++, 0, "Cyan On Red");
     (void)refresh();
     
     /* Exit */
-    (void)move(row++, 0);
     (void)attrset(A_NORMAL);
-    (void)addstr("Press Any Key To Continue...");
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
     
@@ -529,28 +489,25 @@ static void demonstration_9(const char * const Description)
     
     /*** Run ***/
     /* Print String */
-    (void)addstr(Description);
+    (void)mvaddstr(0, 0, Description);
     (void)refresh();
     (void)napms(1000);
     
     /* Background 1 */
     (void)bkgd('.');
-    (void)move(0, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(0, 0, Description);
     (void)refresh();
     (void)napms(1000);
     
     /* Background 2 */
     (void)bkgd('*' | COLOR_PAIR(1));
-    (void)move(0, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(0, 0, Description);
     (void)refresh();
     (void)napms(1000);
     
     /* Background 3 */
     (void)bkgd(' ');
-    (void)move(0, 0);
-    (void)addstr("Press Any Key To Continue...");
+    (void)mvaddstr(0, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
     
@@ -567,22 +524,19 @@ static void demonstration_10(const char * const Description)
     
     /*** Run ***/
     /* Print String */
-    (void)move(row++, 0);
-    (void)addstr(Description);
+    (void)mvaddstr(row++, 0, Description);
     (void)refresh();
     (void)napms(1000);
     
     /* Beep */
     (void)beep();
-    (void)move(row++, 0);
-    (void)addstr("Beep");
+    (void)mvaddstr(row++, 0, "Beep");
     (void)refresh();
     (void)napms(1000);
     
     /* Flash */
     (void)flash();
-    (void)move(row++, 0);
-    (void)addstr("Flash");
+    (void)mvaddstr(row++, 0, "Flash");
     (void)refresh();
     (void)napms(1000);
     
@@ -590,3 +544,71 @@ static void demonstration_10(const char * const Description)
     (void)endwin();
 }
 
+/*** Cursor ***/
+static void demonstration_11(const char * const Description)
+{
+    int numCols, numRows, row = 0;
+    
+    /*** Set Up ***/
+    (void)initscr();
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(row++, 0, Description);
+    (void)refresh();
+    
+    /* Screen Size */
+    (void)getmaxyx(stdscr, numRows, numCols);
+    (void)mvprintw(row++, 0, "Rows: %d", numRows);
+    (void)refresh();
+    (void)mvprintw(row++, 0, "Columns: %d", numCols);
+    (void)refresh();
+    (void)mvprintw(row++, 0, "Lines: %d", LINES);
+    (void)refresh();
+    (void)mvprintw(row++, 0, "Columns: %d", COLS);
+    (void)refresh();
+    
+    /* Exit */
+    (void)attrset(A_NORMAL);
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+static void demonstration_12(const char * const Description)
+{
+    int row = 0, x, y;
+    
+    /*** Set Up ***/
+    (void)initscr();
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(row++, 0, Description);
+    (void)refresh();
+    
+    /* Get String */
+    (void)mvaddstr(row++, 0, "Enter String (Ending With '~'):");
+    (void)refresh();
+    (void)move(row++, 0);
+    while(getch() != '~')
+        continue;
+    
+    /* Location */
+    (void)addch('\b'); // Before '~'
+    (void)getyx(stdscr, y, x);
+    (void)mvprintw(row++, 0, "Your '~' Is At Location (%d, %d)", x, y);
+    (void)refresh();
+    
+    /* Exit */
+    (void)attrset(A_NORMAL);
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
