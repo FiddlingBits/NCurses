@@ -40,6 +40,7 @@ static void demonstration_13(const char * const Description);
 static void demonstration_14(const char * const Description);
 static void demonstration_15(const char * const Description);
 static void demonstration_16(const char * const Description);
+static void demonstration_17(const char * const Description);
 
 /****************************************************************************************************
  * Constant
@@ -63,7 +64,8 @@ static const demonstration_list_t demonstration_List[] =
     {"Text Manipulation: Insert Character", demonstration_13},
     {"Text Manipulation: Insert String", demonstration_14},
     {"Text Manipulation: Delete String And Characters", demonstration_15},
-    {"Text Manipulation: Delete/Insert Multiple Lines", demonstration_16}
+    {"Text Manipulation: Delete/Insert Multiple Lines", demonstration_16},
+    {"Clear: Screen, To EOL, To Bottom", demonstration_17}
 };
 static const size_t demonstration_ListCount = sizeof(demonstration_List) / sizeof(demonstration_List[0]);
 
@@ -754,3 +756,72 @@ static void demonstration_16(const char * const Description)
     (void)endwin();
 }
 
+/*** Clear ***/
+static void demonstration_17(const char * const Description)
+{
+    size_t i;
+    
+    /*** Set Up ***/
+    (void)initscr();
+    
+    /*** Run ***/
+    /* Print Strings */
+    for(i = 0; i < 20; i++)
+    {
+        (void)mvaddstr(i, i, Description);
+        (void)refresh();
+        (void)napms(100);
+    }
+    
+    /* Clear Screen */
+    (void)clear();
+    (void)mvaddstr(0, 0, "Screen Cleared");
+    (void)refresh();
+    (void)napms(1500);
+    
+    /* Print Strings */
+    for(i = 0; i < 20; i++)
+    {
+        (void)mvaddstr(i, i, Description);
+        (void)refresh();
+        (void)napms(100);
+        (void)move(i, i);
+        (void)clrtoeol(); // Clear To EOL
+    }
+    
+    /* Clear Screen */
+    (void)clear();
+    (void)mvaddstr(0, 0, "Screen Cleared");
+    (void)refresh();
+    (void)napms(1500);
+    
+    /* Print Strings */
+    for(i = 0; i < 20; i++)
+        (void)mvaddstr(i, i, Description);
+    (void)refresh();
+    
+    /* Clear To Bottom */
+    (void)move(10, 0);
+    (void)clrtoeol(); // Clear To EOL
+    (void)addstr("Clear To Bottom In 1 Second From Here");
+    (void)refresh();
+    (void)napms(1000);
+    (void)clrtobot();
+    (void)refresh();
+    (void)napms(1000);
+    
+    /* Clear Screen */
+    (void)clear();
+    (void)mvaddstr(0, 0, "Screen Cleared");
+    (void)refresh();
+    (void)napms(1500);
+    
+    /* Exit */
+    (void)move(0, 0);
+    (void)addstr("Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
