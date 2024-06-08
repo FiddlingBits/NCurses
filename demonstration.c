@@ -36,6 +36,10 @@ static void demonstration_9(const char * const Description);
 static void demonstration_10(const char * const Description);
 static void demonstration_11(const char * const Description);
 static void demonstration_12(const char * const Description);
+static void demonstration_13(const char * const Description);
+static void demonstration_14(const char * const Description);
+static void demonstration_15(const char * const Description);
+static void demonstration_16(const char * const Description);
 
 /****************************************************************************************************
  * Constant
@@ -55,7 +59,11 @@ static const demonstration_list_t demonstration_List[] =
     {"Formatting Text: Background", demonstration_9},
     {"Formatting Text: Miscellaneous", demonstration_10},
     {"Cursor: Screen Size", demonstration_11},
-    {"Cursor: Location", demonstration_12}
+    {"Cursor: Location", demonstration_12},
+    {"Text Manipulation: Insert Character", demonstration_13},
+    {"Text Manipulation: Insert String", demonstration_14},
+    {"Text Manipulation: Delete String And Characters", demonstration_15},
+    {"Text Manipulation: Delete/Insert Multiple Lines", demonstration_16}
 };
 static const size_t demonstration_ListCount = sizeof(demonstration_List) / sizeof(demonstration_List[0]);
 
@@ -569,7 +577,6 @@ static void demonstration_11(const char * const Description)
     (void)refresh();
     
     /* Exit */
-    (void)attrset(A_NORMAL);
     (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
@@ -604,7 +611,6 @@ static void demonstration_12(const char * const Description)
     (void)refresh();
     
     /* Exit */
-    (void)attrset(A_NORMAL);
     (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
@@ -612,3 +618,139 @@ static void demonstration_12(const char * const Description)
     /*** Clean Up ***/
     (void)endwin();
 }
+
+/*** Text Manipulation ***/
+static void demonstration_13(const char * const Description)
+{
+    size_t i;
+    int row = 0;
+    
+    /*** Set Up ***/
+    (void)initscr();
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(row++, 0, Description);
+    (void)refresh();
+    
+    /* Insert Characters */
+    move(row++, 0);
+    for(i = 0; i < strlen(Description); i++)
+    {
+        (void)insch(Description[strlen(Description) - 1 - i]);
+        (void)refresh();
+        (void)napms(50);
+    }
+    
+    /* Exit */
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+static void demonstration_14(const char * const Description)
+{
+    /*** Set Up ***/
+    (void)initscr();
+    
+    /*** Run ***/
+    /* Print String */
+    (void)insstr(Description);
+    (void)refresh();
+    (void)napms(500);
+    
+    /* Insert String */
+    (void)insertln();
+    (void)refresh();
+    (void)napms(500);
+    
+    /* Exit */
+    (void)insstr("Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+static void demonstration_15(const char * const Description)
+{
+    size_t i;
+    
+    /*** Set Up ***/
+    (void)initscr();
+    
+    /*** Run ***/ 
+    /* Print String */
+    (void)addstr(Description);
+    (void)refresh();
+    (void)napms(500);
+    
+    /* Delete Characters */
+    (void)move(0, 0);
+    for(i = 0; i < strlen(Description); i++)
+    {
+        (void)delch();
+        (void)refresh();
+        (void)napms(50);
+    }
+    
+    /* Print String */
+    (void)addstr(Description);
+    (void)refresh();
+    (void)napms(500);
+    
+    /* Delete String */
+    (void)move(0, 0);
+    (void)deleteln();
+    (void)refresh();
+    (void)napms(500);
+    
+    /* Exit */
+    (void)addstr("Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+static void demonstration_16(const char * const Description)
+{    
+    /*** Set Up ***/
+    (void)initscr();
+    
+    /*** Run ***/ 
+    /* Print String */
+    (void)addstr(Description);
+    (void)refresh();
+    (void)napms(1500);
+    
+    /* Insert Lines */
+    (void)move(0, 0);
+    (void)insdelln(3);
+    (void)addstr("Three Lines Inserted");
+    (void)refresh();
+    (void)napms(1500);
+    
+    /* Delete Lines */
+    (void)move(0, 0);
+    (void)insdelln(-4);
+    (void)addstr("Four Lines Deleted");
+    (void)refresh();
+    (void)napms(1500);
+    
+    /* Exit */
+    (void)move(0, 0);
+    (void)insdelln(-1);
+    (void)addstr("Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
