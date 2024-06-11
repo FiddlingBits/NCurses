@@ -41,6 +41,9 @@ static void demonstration_14(const char * const Description);
 static void demonstration_15(const char * const Description);
 static void demonstration_16(const char * const Description);
 static void demonstration_17(const char * const Description);
+static void demonstration_18(const char * const Description);
+static void demonstration_19(const char * const Description);
+static void demonstration_20(const char * const Description);
 
 /****************************************************************************************************
  * Constant
@@ -65,7 +68,10 @@ static const demonstration_list_t demonstration_List[] =
     {"Text Manipulation: Insert String", demonstration_14},
     {"Text Manipulation: Delete String And Characters", demonstration_15},
     {"Text Manipulation: Delete/Insert Multiple Lines", demonstration_16},
-    {"Clear: Screen, To EOL, To Bottom", demonstration_17}
+    {"Clear: Screen, To EOL, To Bottom", demonstration_17},
+    {"Keyboard Input: No Delay", demonstration_18},
+    {"Keyboard Input: Disable Get Character Echo", demonstration_19},
+    {"Keyboard Input: Special Keys", demonstration_20}
 };
 static const size_t demonstration_ListCount = sizeof(demonstration_List) / sizeof(demonstration_List[0]);
 
@@ -819,6 +825,137 @@ static void demonstration_17(const char * const Description)
     /* Exit */
     (void)move(0, 0);
     (void)addstr("Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+/*** Keyboard Input ***/
+static void demonstration_18(const char * const Description)
+{
+    int row = 0;
+    
+    /*** Set Up ***/
+    /* Set Up */
+    (void)initscr();
+    
+    /* No Delay */
+    (void)nodelay(stdscr, TRUE);
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(row++, 0, Description);
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue");
+    (void)refresh();
+    
+    /* Wait */
+    while(getch() == ERR)
+    {
+        (void)addch('.');
+        (void)refresh();
+        (void)napms(100);
+    }
+    
+    /* Restore Delay */
+    (void)nodelay(stdscr, FALSE);
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+static void demonstration_19(const char * const Description)
+{
+    char password[256];
+    int row = 0;
+    
+    /*** Set Up ***/
+    /* Set Up */
+    (void)initscr();
+    
+    /* Turn Off Echo */
+    (void)noecho();
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(row++, 0, Description);
+    (void)refresh();
+    
+    /* Get Password */
+    (void)mvaddstr(row++, 0, "Enter Secret Password: ");
+    (void)refresh();
+    (void)getnstr(password, sizeof(password));
+    (void)mvprintw(row++, 0, "You Entered: %s", password);
+    (void)refresh();
+    
+    /* Turn On Echo */
+    (void)echo();
+    
+    /* Exit */
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+static void demonstration_20(const char * const Description)
+{
+    bool exit = false;
+    int row = 0;
+    
+    /*** Set Up ***/
+    /* Set Up */
+    (void)initscr();
+    
+    /* Enable Special Keys */
+    (void)keypad(stdscr, TRUE);
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(row++, 0, Description);
+    (void)refresh();
+    (void)mvaddstr(row++, 0, "Press One Of The Arrow Keys (Up, Down, Left, Or Right)");
+    (void)refresh();
+    
+    /* Get Special Key */
+    while(!exit)
+    {
+        switch(getch())
+        {
+            case KEY_UP:
+                (void)mvaddstr(row++, 0, "KEY_UP");
+                (void)refresh();
+                exit = true;
+                break;
+            case KEY_DOWN:
+                (void)mvaddstr(row++, 0, "KEY_DOWN");
+                (void)refresh();
+                exit = true;
+                break;
+            case KEY_LEFT:
+                (void)mvaddstr(row++, 0, "KEY_LEFT");
+                (void)refresh();
+                exit = true;
+                break;
+            case KEY_RIGHT:
+                (void)mvaddstr(row++, 0, "KEY_RIGHT");
+                (void)refresh();
+                exit = true;
+                break;
+            default:
+                /* Do Nothing */
+                break;
+        }
+    }
+    
+    /* Disable Special Keys*/
+    (void)keypad(stdscr, FALSE);
+    
+    /* Exit */
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
     
