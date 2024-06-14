@@ -26,4 +26,8 @@ usage: ./build/ncurses.exe [NUMBER]
   [18] Keyboard Input: No Delay
   [19] Keyboard Input: Disable Get Character Echo
   [20] Keyboard Input: Special Keys
+  [21] Windows: New Window (Same Size As Standard Screen)
+  [22] Windows: New Window (Smaller Than Standard Screen)
+  [23] Windows: Default Border/Box
+  [24] Windows: Custom Border/Box
 ```

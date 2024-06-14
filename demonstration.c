@@ -44,6 +44,10 @@ static void demonstration_17(const char * const Description);
 static void demonstration_18(const char * const Description);
 static void demonstration_19(const char * const Description);
 static void demonstration_20(const char * const Description);
+static void demonstration_21(const char * const Description);
+static void demonstration_22(const char * const Description);
+static void demonstration_23(const char * const Description);
+static void demonstration_24(const char * const Description);
 
 /****************************************************************************************************
  * Constant
@@ -71,7 +75,11 @@ static const demonstration_list_t demonstration_List[] =
     {"Clear: Screen, To EOL, To Bottom", demonstration_17},
     {"Keyboard Input: No Delay", demonstration_18},
     {"Keyboard Input: Disable Get Character Echo", demonstration_19},
-    {"Keyboard Input: Special Keys", demonstration_20}
+    {"Keyboard Input: Special Keys", demonstration_20},
+    {"Windows: New Window (Same Size As Standard Screen)", demonstration_21},
+    {"Windows: New Window (Smaller Than Standard Screen)", demonstration_22},
+    {"Windows: Default Border/Box", demonstration_23},
+    {"Windows: Custom Border/Box", demonstration_24}
 };
 static const size_t demonstration_ListCount = sizeof(demonstration_List) / sizeof(demonstration_List[0]);
 
@@ -960,5 +968,170 @@ static void demonstration_20(const char * const Description)
     (void)getch();
     
     /*** Clean Up ***/
+    (void)endwin();
+}
+
+/*** Windows ***/
+static void demonstration_21(const char * const Description)
+{
+    WINDOW *newWindow;
+    
+    /*** Set Up ***/
+    /* Set Up */
+    (void)initscr();
+    newWindow = newwin(0, 0, 0, 0); // Same Size As Standard Screen
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(0, 0, Description);
+    (void)refresh();
+    (void)napms(1500);
+    
+    /* Standard Screen */
+    (void)clear();
+    (void)bkgd('.');
+    (void)mvaddstr(0, 0, "This Is The Standard Screen");
+    (void)mvaddstr(1, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /* New Window */
+    (void)wbkgd(newWindow, '*');
+    (void)mvwaddstr(newWindow, 0, 0, "This Is A New Window");
+    (void)mvwaddstr(newWindow, 1, 0, "Press Any Key To Continue...");
+    (void)wrefresh(newWindow);
+    (void)wgetch(newWindow);
+    
+    /* Standard Screen */
+    (void)touchwin(stdscr); // This Is Necessary If Standard Screen Hasn't Changed; If Standard Screen Hasn't Changed, refresh Won't Show It Again
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)delwin(newWindow);
+    (void)endwin();
+}
+
+static void demonstration_22(const char * const Description)
+{
+    WINDOW *newWindow;
+    
+    /*** Set Up ***/
+    /* Set Up */
+    (void)initscr();
+    newWindow = newwin(LINES / 2, COLS / 2, LINES / 4, COLS / 4); // 1/2 Size Of Standard Screen
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(0, 0, Description);
+    (void)refresh();
+    (void)napms(1500);
+    
+    /* Standard Screen */
+    (void)clear();
+    (void)bkgd('.');
+    (void)mvaddstr(0, 0, "This Is The Standard Screen");
+    (void)mvaddstr(1, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /* New Window */
+    (void)wbkgd(newWindow, '*');
+    (void)mvwaddstr(newWindow, 0, 0, "This Is A New Window");
+    (void)mvwaddstr(newWindow, 1, 0, "Press Any Key To Continue...");
+    (void)wrefresh(newWindow);
+    (void)wgetch(newWindow);
+    
+    /* Standard Screen */
+    (void)touchwin(stdscr); // This Is Necessary If Standard Screen Hasn't Changed; If Standard Screen Hasn't Changed, refresh Won't Show It Again
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)delwin(newWindow);
+    (void)endwin();
+}
+
+static void demonstration_23(const char * const Description)
+{    
+    WINDOW *newWindow;
+    
+    /*** Set Up ***/
+    /* Set Up */
+    (void)initscr();
+    newWindow = newwin(LINES / 2, COLS / 2, LINES / 4, COLS / 4); // 1/2 Size Of Standard Screen
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(0, 0, Description);
+    (void)refresh();
+    (void)napms(1500);
+    
+    /* Standard Screen */
+    (void)clear();
+    (void)bkgd('.');
+    (void)border(0, 0, 0, 0, 0, 0, 0, 0); // 0 (Use Default Characters)
+    (void)mvaddstr(2, 2, "This Is The Standard Screen With A Default Border");
+    (void)mvaddstr(3, 2, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /* New Window */
+    (void)wbkgd(newWindow, '*');
+    (void)box(newWindow, 0, 0); // 0 (Use Default Characters)
+    (void)mvwaddstr(newWindow, 2, 2, "This Is A New Window Within A Default Box");
+    (void)mvwaddstr(newWindow, 3, 2, "Press Any Key To Continue...");
+    (void)wrefresh(newWindow);
+    (void)wgetch(newWindow);
+    
+    /* Standard Screen */
+    (void)touchwin(stdscr); // This Is Necessary If Standard Screen Hasn't Changed; If Standard Screen Hasn't Changed, refresh Won't Show It Again
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)delwin(newWindow);
+    (void)endwin();
+}
+
+static void demonstration_24(const char * const Description)
+{    
+    WINDOW *newWindow;
+    
+    /*** Set Up ***/
+    /* Set Up */
+    (void)initscr();
+    newWindow = newwin(LINES / 2, COLS / 2, LINES / 4, COLS / 4); // 1/2 Size Of Standard Screen
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(0, 0, Description);
+    (void)refresh();
+    (void)napms(1500);
+    
+    /* Standard Screen */
+    (void)clear();
+    (void)bkgd('.');
+    (void)border('A', 'B', 'C', 'D', '1', '2', '3', '4');
+    (void)mvaddstr(2, 2, "This Is The Standard Screen With A Custom Border");
+    (void)mvaddstr(3, 2, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /* New Window */
+    (void)wbkgd(newWindow, '*');
+    (void)box(newWindow, ':', '-');
+    (void)mvwaddstr(newWindow, 2, 2, "This Is A New Window Within A Custom Box");
+    (void)mvwaddstr(newWindow, 3, 2, "Press Any Key To Continue...");
+    (void)wrefresh(newWindow);
+    (void)wgetch(newWindow);
+    
+    /* Standard Screen */
+    (void)touchwin(stdscr); // This Is Necessary If Standard Screen Hasn't Changed; If Standard Screen Hasn't Changed, refresh Won't Show It Again
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)delwin(newWindow);
     (void)endwin();
 }
