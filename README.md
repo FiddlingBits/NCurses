@@ -30,4 +30,5 @@ usage: ./build/ncurses.exe [NUMBER]
   [22] Windows: New Window (Smaller Than Standard Screen)
   [23] Windows: Default Border/Box
   [24] Windows: Custom Border/Box
+  [25] Subwindow: Data Is Shared
 ```

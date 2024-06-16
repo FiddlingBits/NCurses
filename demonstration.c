@@ -48,6 +48,7 @@ static void demonstration_21(const char * const Description);
 static void demonstration_22(const char * const Description);
 static void demonstration_23(const char * const Description);
 static void demonstration_24(const char * const Description);
+static void demonstration_25(const char * const Description);
 
 /****************************************************************************************************
  * Constant
@@ -79,7 +80,8 @@ static const demonstration_list_t demonstration_List[] =
     {"Windows: New Window (Same Size As Standard Screen)", demonstration_21},
     {"Windows: New Window (Smaller Than Standard Screen)", demonstration_22},
     {"Windows: Default Border/Box", demonstration_23},
-    {"Windows: Custom Border/Box", demonstration_24}
+    {"Windows: Custom Border/Box", demonstration_24},
+    {"Subwindows: Data Is Shared", demonstration_25}
 };
 static const size_t demonstration_ListCount = sizeof(demonstration_List) / sizeof(demonstration_List[0]);
 
@@ -1133,5 +1135,39 @@ static void demonstration_24(const char * const Description)
     
     /*** Clean Up ***/
     (void)delwin(newWindow);
+    (void)endwin();
+}
+
+/*** Subwindows ***/
+static void demonstration_25(const char * const Description)
+{
+    int row = 0;
+    WINDOW* subwindow;
+    
+    /*** Set Up ***/
+    (void)initscr();
+    
+    /*** Run ***/ 
+    /* Print String */
+    (void)mvaddstr(row++, 0, Description);
+    (void)refresh();
+    (void)napms(1500);
+    
+    /* Subwindow */
+    subwindow = subwin(stdscr, LINES - 2, COLS - 2, 1, 1);
+    (void)box(subwindow, 0, 0);
+    (void)mvwaddstr(subwindow, 2, 2, "This Is A Sub Window");
+    (void)mvwaddstr(subwindow, 3, 2, "Press Any Key To Continue...");
+    (void)wrefresh(subwindow);
+    (void)wgetch(subwindow);
+    
+    /* Exit */
+    (void)mvaddstr(row++, 0, "This Is The Standard Screen, Writing Into The Subwindow");
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+   
+    
+    /*** Clean Up ***/
     (void)endwin();
 }
