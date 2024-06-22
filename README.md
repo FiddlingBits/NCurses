@@ -31,5 +31,8 @@ usage: ./build/ncurses.exe [NUMBER]
   [23] Windows: Default Border/Box
   [24] Windows: Custom Border/Box
   [25] Windows: Custom Border/Box
-  [26] Subwindows: Data Is Shared
+  [26] Windows: Automatic Scrolling
+  [27] Windows: Manual Scrolling
+  [28] Windows: Scroll Region
+  [29] Subwindows: Data Is Shared
 ```

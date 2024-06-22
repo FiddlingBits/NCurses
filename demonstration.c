@@ -50,6 +50,9 @@ static void demonstration_23(const char * const Description);
 static void demonstration_24(const char * const Description);
 static void demonstration_25(const char * const Description);
 static void demonstration_26(const char * const Description);
+static void demonstration_27(const char * const Description);
+static void demonstration_28(const char * const Description);
+static void demonstration_29(const char * const Description);
 
 /****************************************************************************************************
  * Constant
@@ -83,7 +86,10 @@ static const demonstration_list_t demonstration_List[] =
     {"Windows: Default Border/Box", demonstration_23},
     {"Windows: Custom Border/Box", demonstration_24},
     {"Windows: Custom Border/Box", demonstration_25},
-    {"Subwindows: Data Is Shared", demonstration_26}
+    {"Windows: Automatic Scrolling", demonstration_26},
+    {"Windows: Manual Scrolling", demonstration_27},
+    {"Windows: Scroll Region", demonstration_28},
+    {"Subwindows: Data Is Shared", demonstration_29}
 };
 static const size_t demonstration_ListCount = sizeof(demonstration_List) / sizeof(demonstration_List[0]);
 
@@ -1178,8 +1184,144 @@ static void demonstration_25(const char * const Description)
     (void)endwin();
 }
 
-/*** Subwindows ***/
 static void demonstration_26(const char * const Description)
+{
+    int i;
+    
+    /*** Set Up ***/
+    /* Set Up */
+    (void)initscr();
+    (void)scrollok(stdscr, TRUE);
+    
+    /* Colors */
+    if(!has_colors() && !can_change_color())
+    {
+        printf("%s\r\n", Description);
+        printf("  Error: Colors And/Or Changing Colors Not Supported\r\n");
+        (void)endwin();
+        return;
+    }
+    (void)start_color();
+    (void)init_pair(0, COLOR_WHITE, COLOR_BLACK);
+    (void)init_pair(1, COLOR_CYAN, COLOR_RED);
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(0, 0, Description);
+    (void)refresh();
+    (void)napms(1000);
+    
+    /* Automatic Scroll */
+    (void)move(1, 0);
+    for(i = 0; i < 500; i++)
+    {
+        if((i % 2) == 0)
+            (void)attrset(COLOR_PAIR(1));
+        else
+            (void)attrset(COLOR_PAIR(0));
+        (void)addstr(Description);
+        (void)napms(25);
+        (void)refresh();
+    }
+    
+    /* Exit */
+    (void)clear();
+    (void)mvaddstr(0, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+static void demonstration_27(const char * const Description)
+{
+    int i;
+    
+    /*** Set Up ***/
+    /* Set Up */
+    (void)initscr();
+    (void)scrollok(stdscr, TRUE);
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(LINES - 1, 0, Description);
+    (void)refresh();
+    
+    /* Manual Scroll */
+    for(i = 0; i < 10; i++)
+    {
+        if((i % 2) == 0)
+            (void)scroll(stdscr);
+        else
+            (void)scrl(5); // wscrl(stdscr, 3) Would Result In The Same Behavior; Value Can Be Negative To Scroll Down
+        (void)refresh();
+        (void)napms(250);
+    }   
+    
+    /* Exit */
+    (void)clear();
+    (void)mvaddstr(0, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+static void demonstration_28(const char * const Description)
+{
+    int i;
+    
+    /*** Set Up ***/
+    /* Set Up */
+    (void)initscr();
+    (void)scrollok(stdscr, TRUE);
+    (void)setscrreg(8, 10);
+    
+    /* Colors */
+    if(!has_colors() && !can_change_color())
+    {
+        printf("%s\r\n", Description);
+        printf("  Error: Colors And/Or Changing Colors Not Supported\r\n");
+        (void)endwin();
+        return;
+    }
+    (void)start_color();
+    (void)init_pair(0, COLOR_WHITE, COLOR_BLACK);
+    (void)init_pair(1, COLOR_CYAN, COLOR_RED);
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(0, 0, Description);
+    (void)refresh();
+    (void)napms(1000);
+    
+    /* Scroll Region */
+    (void)move(1, 0);
+    for(i = 0; i < 150; i++)
+    {
+        if((i % 2) == 0)
+            (void)attrset(COLOR_PAIR(1));
+        else
+            (void)attrset(COLOR_PAIR(0));
+        (void)addstr(Description);
+        (void)napms(25);
+        (void)refresh();
+    }
+    
+    /* Exit */
+    (void)clear();
+    (void)mvaddstr(0, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+/*** Subwindows ***/
+static void demonstration_29(const char * const Description)
 {
     int row = 0;
     WINDOW* subwindow;
