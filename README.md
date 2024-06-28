@@ -18,21 +18,24 @@ usage: ./build/ncurses.exe [NUMBER]
   [10] Formatting Text: Miscellaneous
   [11] Cursor: Screen Size
   [12] Cursor: Location
-  [13] Text Manipulation: Insert Character
-  [14] Text Manipulation: Insert String
-  [15] Text Manipulation: Delete String And Characters
-  [16] Text Manipulation: Delete/Insert Multiple Lines
-  [17] Clear: Screen, To EOL, To Bottom
-  [18] Keyboard Input: No Delay
-  [19] Keyboard Input: Disable Get Character Echo
-  [20] Keyboard Input: Special Keys
-  [21] Windows: New Window (Same Size As Standard Screen)
-  [22] Windows: New Window (Smaller Than Standard Screen)
-  [23] Windows: Default Border/Box
-  [24] Windows: Custom Border/Box
+  [13] Cursor: Visibility
+  [14] Text Manipulation: Insert Character
+  [15] Text Manipulation: Insert String
+  [16] Text Manipulation: Delete String And Characters
+  [17] Text Manipulation: Delete/Insert Multiple Lines
+  [18] Clear: Screen, To EOL, To Bottom
+  [19] Keyboard Input: No Delay
+  [20] Keyboard Input: Disable Get Character Echo
+  [21] Keyboard Input: Special Keys
+  [22] Windows: New Window (Same Size As Standard Screen)
+  [23] Windows: New Window (Smaller Than Standard Screen)
+  [24] Windows: Default Border/Box
   [25] Windows: Custom Border/Box
-  [26] Windows: Automatic Scrolling
-  [27] Windows: Manual Scrolling
-  [28] Windows: Scroll Region
-  [29] Subwindows: Data Is Shared
+  [26] Windows: Custom Border/Box
+  [27] Windows: Automatic Scrolling
+  [28] Windows: Manual Scrolling
+  [29] Windows: Scroll Region
+  [30] Subwindows: Data Is Shared
+  [31] Miscellaneous: Save
+  [32] Miscellaneous: Restore
 ```

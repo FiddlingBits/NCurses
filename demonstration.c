@@ -53,6 +53,9 @@ static void demonstration_26(const char * const Description);
 static void demonstration_27(const char * const Description);
 static void demonstration_28(const char * const Description);
 static void demonstration_29(const char * const Description);
+static void demonstration_30(const char * const Description);
+static void demonstration_31(const char * const Description);
+static void demonstration_32(const char * const Description);
 
 /****************************************************************************************************
  * Constant
@@ -73,23 +76,26 @@ static const demonstration_list_t demonstration_List[] =
     {"Formatting Text: Miscellaneous", demonstration_10},
     {"Cursor: Screen Size", demonstration_11},
     {"Cursor: Location", demonstration_12},
-    {"Text Manipulation: Insert Character", demonstration_13},
-    {"Text Manipulation: Insert String", demonstration_14},
-    {"Text Manipulation: Delete String And Characters", demonstration_15},
-    {"Text Manipulation: Delete/Insert Multiple Lines", demonstration_16},
-    {"Clear: Screen, To EOL, To Bottom", demonstration_17},
-    {"Keyboard Input: No Delay", demonstration_18},
-    {"Keyboard Input: Disable Get Character Echo", demonstration_19},
-    {"Keyboard Input: Special Keys", demonstration_20},
-    {"Windows: New Window (Same Size As Standard Screen)", demonstration_21},
-    {"Windows: New Window (Smaller Than Standard Screen)", demonstration_22},
-    {"Windows: Default Border/Box", demonstration_23},
-    {"Windows: Custom Border/Box", demonstration_24},
+    {"Cursor: Visibility", demonstration_13},
+    {"Text Manipulation: Insert Character", demonstration_14},
+    {"Text Manipulation: Insert String", demonstration_15},
+    {"Text Manipulation: Delete String And Characters", demonstration_16},
+    {"Text Manipulation: Delete/Insert Multiple Lines", demonstration_17},
+    {"Clear: Screen, To EOL, To Bottom", demonstration_18},
+    {"Keyboard Input: No Delay", demonstration_19},
+    {"Keyboard Input: Disable Get Character Echo", demonstration_20},
+    {"Keyboard Input: Special Keys", demonstration_21},
+    {"Windows: New Window (Same Size As Standard Screen)", demonstration_22},
+    {"Windows: New Window (Smaller Than Standard Screen)", demonstration_23},
+    {"Windows: Default Border/Box", demonstration_24},
     {"Windows: Custom Border/Box", demonstration_25},
-    {"Windows: Automatic Scrolling", demonstration_26},
-    {"Windows: Manual Scrolling", demonstration_27},
-    {"Windows: Scroll Region", demonstration_28},
-    {"Subwindows: Data Is Shared", demonstration_29}
+    {"Windows: Custom Border/Box", demonstration_26},
+    {"Windows: Automatic Scrolling", demonstration_27},
+    {"Windows: Manual Scrolling", demonstration_28},
+    {"Windows: Scroll Region", demonstration_29},
+    {"Subwindows: Data Is Shared", demonstration_30},
+    {"Miscellaneous: Save", demonstration_31},
+    {"Miscellaneous: Restore", demonstration_32}
 };
 static const size_t demonstration_ListCount = sizeof(demonstration_List) / sizeof(demonstration_List[0]);
 
@@ -645,8 +651,39 @@ static void demonstration_12(const char * const Description)
     (void)endwin();
 }
 
-/*** Text Manipulation ***/
 static void demonstration_13(const char * const Description)
+{
+    int row = 0;
+    
+    /*** Set Up ***/
+    (void)initscr();
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(row++, 0, Description);
+    (void)refresh();
+    
+    /* Cursor Mode */
+    (void)curs_set(0); // Invisible
+    (void)mvaddstr(row++, 0, "The Cursor Is Invisible");
+    (void)refresh();
+    (void)napms(1000);
+    (void)curs_set(1); // Visible
+    (void)mvaddstr(row++, 0, "The Cursor Is Visible");
+    (void)refresh();
+    (void)napms(1000);
+    
+    /* Exit */
+    (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+/*** Text Manipulation ***/
+static void demonstration_14(const char * const Description)
 {
     size_t i;
     int row = 0;
@@ -677,7 +714,7 @@ static void demonstration_13(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_14(const char * const Description)
+static void demonstration_15(const char * const Description)
 {
     /*** Set Up ***/
     (void)initscr();
@@ -702,7 +739,7 @@ static void demonstration_14(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_15(const char * const Description)
+static void demonstration_16(const char * const Description)
 {
     size_t i;
     
@@ -744,7 +781,7 @@ static void demonstration_15(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_16(const char * const Description)
+static void demonstration_17(const char * const Description)
 {    
     /*** Set Up ***/
     (void)initscr();
@@ -781,7 +818,7 @@ static void demonstration_16(const char * const Description)
 }
 
 /*** Clear ***/
-static void demonstration_17(const char * const Description)
+static void demonstration_18(const char * const Description)
 {
     size_t i;
     
@@ -851,7 +888,7 @@ static void demonstration_17(const char * const Description)
 }
 
 /*** Keyboard Input ***/
-static void demonstration_18(const char * const Description)
+static void demonstration_19(const char * const Description)
 {
     int row = 0;
     
@@ -883,7 +920,7 @@ static void demonstration_18(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_19(const char * const Description)
+static void demonstration_20(const char * const Description)
 {
     char password[256];
     int row = 0;
@@ -919,7 +956,7 @@ static void demonstration_19(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_20(const char * const Description)
+static void demonstration_21(const char * const Description)
 {
     bool exit = false;
     int row = 0;
@@ -982,7 +1019,7 @@ static void demonstration_20(const char * const Description)
 }
 
 /*** Windows ***/
-static void demonstration_21(const char * const Description)
+static void demonstration_22(const char * const Description)
 {
     WINDOW *newWindow;
     
@@ -1022,7 +1059,7 @@ static void demonstration_21(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_22(const char * const Description)
+static void demonstration_23(const char * const Description)
 {
     WINDOW *newWindow;
     
@@ -1062,7 +1099,7 @@ static void demonstration_22(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_23(const char * const Description)
+static void demonstration_24(const char * const Description)
 {    
     WINDOW *newWindow;
     
@@ -1104,7 +1141,7 @@ static void demonstration_23(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_24(const char * const Description)
+static void demonstration_25(const char * const Description)
 {    
     WINDOW *newWindow;
     
@@ -1146,7 +1183,7 @@ static void demonstration_24(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_25(const char * const Description)
+static void demonstration_26(const char * const Description)
 {
     int i;
     WINDOW *newWindow;
@@ -1184,7 +1221,7 @@ static void demonstration_25(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_26(const char * const Description)
+static void demonstration_27(const char * const Description)
 {
     int i;
     
@@ -1234,7 +1271,7 @@ static void demonstration_26(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_27(const char * const Description)
+static void demonstration_28(const char * const Description)
 {
     int i;
     
@@ -1269,7 +1306,7 @@ static void demonstration_27(const char * const Description)
     (void)endwin();
 }
 
-static void demonstration_28(const char * const Description)
+static void demonstration_29(const char * const Description)
 {
     int i;
     
@@ -1321,7 +1358,7 @@ static void demonstration_28(const char * const Description)
 }
 
 /*** Subwindows ***/
-static void demonstration_29(const char * const Description)
+static void demonstration_30(const char * const Description)
 {
     int row = 0;
     WINDOW* subwindow;
@@ -1348,7 +1385,63 @@ static void demonstration_29(const char * const Description)
     (void)mvaddstr(row++, 0, "Press Any Key To Continue...");
     (void)refresh();
     (void)getch();
-   
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+/*** Miscellaneous ***/
+static void demonstration_31(const char * const Description)
+{
+    int row = 0;
+    
+    /*** Set Up ***/
+    (void)initscr();
+    
+    /*** Run ***/
+    /* Print String */
+    (void)mvaddstr(row++, 0, Description);
+    (void)refresh();
+    
+    /* Get String */
+    (void)mvaddstr(row++, 0, "Enter String (Ending With '~'):");
+    (void)refresh();
+    (void)move(row++, 0);
+    while(getch() != '~')
+        continue;
+    (void)addch('\b'); // Before '~'
+    (void)addch(' ');
+    
+    /* Save */
+    (void)mvaddstr(row++, 0, "Saving...");
+    (void)refresh();
+    (void)scr_dump("build/demonstration_31.win");
+    (void)napms(500);
+    
+    /*** Clean Up ***/
+    (void)endwin();
+}
+
+static void demonstration_32(const char * const Description)
+{
+    int status;
+    
+    /*** Set Up ***/
+    (void)initscr();
+    
+    /*** Run ***/    
+    /* Restore */
+    (void)refresh();
+    status = scr_restore("build/demonstration_31.win");
+    if(status == ERR)
+        (void)mvaddstr(0, 0, "Error Restoring \"build/demonstration_31.win\"");
+    (void)doupdate();
+    
+    /* Print String */
+    (void)mvaddstr(5, 0, Description);
+    (void)mvaddstr(6, 0, "Press Any Key To Continue...");
+    (void)refresh();
+    (void)getch();
     
     /*** Clean Up ***/
     (void)endwin();
